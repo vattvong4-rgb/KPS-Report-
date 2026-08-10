@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>របាយការណ៍សង្ខេបបម្រែបម្រួលប្រជាសាស្ត្រ និងការអភិវឌ្ឍន៍ ខេត្តកំពង់ស្ពឺ</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Khmer -->
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruuy+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Moul&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#0c4a6e',
+                            900: '#0a3651',
+                        },
+                        accent: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        moul: ['Moul', 'serif'],
+                        body: ['Kantumruuy Pro', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Kantumruuy Pro', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .font-moul {
+            font-family: 'Moul', serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        /* Active menu indicator */
+        .nav-btn.active {
+            background-color: #0369a1;
+            color: #ffffff;
+            border-bottom: 3px solid #f59e0b;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Sticky Header & Navigation Menu -->
+    <header class="sticky top-0 z-50 bg-white shadow-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo & Brand Name -->
+                <div class="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer" onclick="switchTab('home')">
+                    <div class="w-12 h-12 rounded-full bg-brand-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-moul text-brand-800 text-sm md:text-base leading-tight">បម្រែបម្រួលប្រជាសាស្ត្រ និងការអភិវឌ្ឍន៍</h1>
+                        <p class="text-xs text-gray-500 font-medium">របាយការណ៍ស្ដីពី «ខេត្តកំពង់ស្ពឺ»</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden lg:flex space-x-1 rtl:space-x-reverse" id="desktop-menu">
+                    <button onclick="switchTab('home')" id="btn-home" class="nav-btn active px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-all duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-house text-xs"></i>
+                        <span>ទំព័រដើម</span>
+                    </button>
+                    <button onclick="switchTab('commune')" id="btn-commune" class="nav-btn px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-all duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-map-location-dot text-xs"></i>
+                        <span>ព័ត៌មានក្រុង/ស្រុក/ឃុំ</span>
+                    </button>
+                    <button onclick="switchTab('health')" id="btn-health" class="nav-btn px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-all duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-heart-pulse text-xs"></i>
+                        <span>សុខាភិបាល</span>
+                    </button>
+                    <button onclick="switchTab('education')" id="btn-education" class="nav-btn px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-all duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-graduation-cap text-xs"></i>
+                        <span>អប់រំ</span>
+                    </button>
+                    <button onclick="switchTab('migration')" id="btn-migration" class="nav-btn px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-all duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-people-arrows text-xs"></i>
+                        <span>ចំណាកស្រុក</span>
+                    </button>
+                    <button onclick="switchTab('poverty')" id="btn-poverty" class="nav-btn px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-all duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-hand-holding-dollar text-xs"></i>
+                        <span>ទិន្នន័យភាពក្រីក្រ</span>
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-toggle" onclick="toggleMobileMenu()" class="p-2 rounded-md text-gray-600 hover:text-brand-600 hover:bg-gray-100 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="lg:hidden hidden border-t border-gray-200 bg-white shadow-lg" id="mobile-menu">
+            <div class="px-3 pt-2 pb-3 space-y-1">
+                <button onclick="switchTab('home')" class="mobile-nav-btn w-full text-left px-4 py-2.5 rounded-md text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 flex items-center space-x-3">
+                    <i class="fa-solid fa-house w-5"></i>
+                    <span>ទំព័រដើម</span>
+                </button>
+                <button onclick="switchTab('commune')" class="mobile-nav-btn w-full text-left px-4 py-2.5 rounded-md text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 flex items-center space-x-3">
+                    <i class="fa-solid fa-map-location-dot w-5"></i>
+                    <span>ព័ត៌មានក្រុង/ស្រុក/ឃុំ</span>
+                </button>
+                <button onclick="switchTab('health')" class="mobile-nav-btn w-full text-left px-4 py-2.5 rounded-md text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 flex items-center space-x-3">
+                    <i class="fa-solid fa-heart-pulse w-5"></i>
+                    <span>សុខាភិបាល</span>
+                </button>
+                <button onclick="switchTab('education')" class="mobile-nav-btn w-full text-left px-4 py-2.5 rounded-md text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 flex items-center space-x-3">
+                    <i class="fa-solid fa-graduation-cap w-5"></i>
+                    <span>អប់រំ</span>
+                </button>
+                <button onclick="switchTab('migration')" class="mobile-nav-btn w-full text-left px-4 py-2.5 rounded-md text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 flex items-center space-x-3">
+                    <i class="fa-solid fa-people-arrows w-5"></i>
+                    <span>ចំណាកស្រុក</span>
+                </button>
+                <button onclick="switchTab('poverty')" class="mobile-nav-btn w-full text-left px-4 py-2.5 rounded-md text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 flex items-center space-x-3">
+                    <i class="fa-solid fa-hand-holding-dollar w-5"></i>
+                    <span>ទិន្នន័យភាពក្រីក្រ</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dynamic Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8" id="main-content">
+        <!-- Content will be dynamically rendered via JS -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-900 text-white border-t border-brand-800 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:flex md:justify-between md:items-center">
+            <div class="mb-4 md:mb-0">
+                <p class="font-moul text-sm text-brand-100">របាយការណ៍ស្ដីពី បម្រែបម្រួលប្រជាសាស្ត្រ និងការអភិវឌ្ឍន៍ ខេត្តកំពង់ស្ពឺ</p>
+                <p class="text-xs text-brand-300 mt-1">ទិន្នន័យត្រូវបានធ្វើបច្ចុប្បន្នភាព និងវិភាគយ៉ាងលម្អិតតាមកម្រិតខេត្ត ក្រុង ស្រុក ឃុំ</p>
+            </div>
+            <div class="text-xs text-brand-300">
+                &copy; ២០២៦ រក្សាសិទ្ធិគ្រប់យ៉ាង | ប្រព័ន្ធគ្រប់គ្រង និងទិន្នន័យអភិវឌ្ឍន៍
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic & Render Functions -->
+    <script>
+        // Global object to keep track of created Chart.js instances for dynamic clean-up
+        const chartInstances = {};
+
+        // Utility function: Clean up existing charts before creating a new one
+        function destroyChart(canvasId) {
+            if (chartInstances[canvasId]) {
+                chartInstances[canvasId].destroy();
+                delete chartInstances[canvasId];
+            }
+        }
+
+        // Toggle Mobile Navigation
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Switch Active Tab View
+        function switchTab(tabId) {
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
+
+            // Update Header Nav Button Classes
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            // Render Tab Content
+            const mainContent = document.getElementById('main-content');
+            
+            switch (tabId) {
+                case 'home':
+                    renderHomeTab(mainContent);
+                    break;
+                case 'commune':
+                    renderCommuneTab(mainContent);
+                    break;
+                case 'health':
+                    renderHealthTab(mainContent);
+                    break;
+                case 'education':
+                    renderEducationTab(mainContent);
+                    break;
+                case 'migration':
+                    renderMigrationTab(mainContent);
+                    break;
+                case 'poverty':
+                    renderPovertyTab(mainContent);
+                    break;
+                default:
+                    renderHomeTab(mainContent);
+            }
+            
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==========================================
+        // TAB 1: HOME (ទំព័រដើម)
+        // ==========================================
+        function renderHomeTab(container) {
+            container.innerHTML = `
+                <!-- Hero Section -->
+                <div class="relative bg-brand-800 text-white rounded-2xl overflow-hidden shadow-xl mb-8">
+                    <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80" alt="Kampong Speu Landscape" class="absolute inset-0 w-full h-full object-cover opacity-25">
+                    <div class="relative p-6 sm:p-10 lg:p-12 z-10">
+                        <span class="bg-accent-500 text-brand-900 font-bold text-xs uppercase px-3 py-1 rounded-full inline-block mb-3">របាយការណ៍សង្ខេបធ្វើបច្ចុប្បន្នភាព</span>
+                        <h1 class="text-2xl sm:text-4xl font-moul leading-tight mb-4">បម្រែបម្រួលប្រជាសាស្ត្រ និងទំនាក់ទំនងរវាងប្រជាជននិងអភិវឌ្ឍន៍ ក្នុងខេត្តកំពង់ស្ពឺ</h1>
+                        <p class="text-gray-200 text-sm sm:text-base max-w-3xl leading-relaxed mb-6">
+                            ខេត្តកំពង់ស្ពឺ មានប្រជាជនសរុបចំនួន <span class="font-bold text-white underline decoration-amber-400">៩៨០,៤៦៩ នាក់</span> និងគ្រួសារសរុបចំនួន <span class="font-bold text-white underline decoration-amber-400">២២១,១៨៨ គ្រួសារ</span>។ ខេត្តកំពុងឆ្លងកាត់ការផ្លាស់ប្ដូរប្រជាសាស្ត្រយ៉ាងឆាប់រហ័ស ដោយសារកំណើនឧស្សាហកម្ម ការបង្កើតរោងចក្រ និងហេដ្ឋារចនាសម្ព័ន្ធតភ្ជាប់។
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <button onclick="switchTab('commune')" class="bg-white text-brand-800 font-bold px-5 py-2.5 rounded-lg text-sm hover:bg-brand-50 transition shadow">
+                                <i class="fa-solid fa-compass mr-2"></i> រកមើលតាមក្រុង/ស្រុក/ឃុំ
+                            </button>
+                            <button onclick="switchTab('poverty')" class="bg-brand-700 text-white font-bold px-5 py-2.5 rounded-lg text-sm hover:bg-brand-600 transition border border-brand-500">
+                                <i class="fa-solid fa-chart-pie mr-2"></i> ទិន្នន័យភាពក្រីក្រ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPI Quick Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 uppercase font-medium">ប្រជាជនសរុប</p>
+                            <h3 class="text-2xl font-bold text-gray-800">៩៨០,៤៦៩ នាក់</h3>
+                            <span class="text-xs text-emerald-600 font-medium"><i class="fa-solid fa-house"></i> ២២១,១៨៨ គ្រួសារ</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-venus-mars"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 uppercase font-medium">សរុបប្រុស / ស្រី</p>
+                            <h3 class="text-sm font-bold text-gray-800">ប្រុស: ៤៧៧,៦ញ២ (៤៨.៧%)</h3>
+                            <h3 class="text-sm font-bold text-gray-800">ស្រី: ៥០២,៧៧៧ (៥១.៣%)</h3>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 uppercase font-medium">អត្រាអក្ខរកម្ម</p>
+                            <h3 class="text-2xl font-bold text-gray-800">៨៦.៤%</h3>
+                            <span class="text-xs text-purple-600 font-medium"><i class="fa-solid fa-check"></i> លើសពីមធ្យមភាគ</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-house-chimney-crack"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 uppercase font-medium">អត្រាភាពក្រីក្រ (IDPoor)</p>
+                            <h3 class="text-2xl font-bold text-gray-800">១៥.២%</h3>
+                            <span class="text-xs text-emerald-600 font-medium"><i class="fa-solid fa-arrow-down"></i> ថយចុះ ៣.១%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gender Ratio Detailed Box -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
+                    <h3 class="text-base font-moul text-brand-800 mb-4">
+                        <i class="fa-solid fa-chart-pie text-brand-600 mr-2"></i> សមាសភាពប្រជាជនតាមភេទ (Gender Distribution)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-sm font-semibold mb-1">
+                                    <span class="text-blue-700"><i class="fa-solid fa-mars mr-1"></i> ប្រុស (៤៨.៧%)</span>
+                                    <span class="text-gray-700">៤៧៧,៦៩២ នាក់</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3.5">
+                                    <div class="bg-blue-600 h-3.5 rounded-full" style="width: 48.72%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm font-semibold mb-1">
+                                    <span class="text-pink-600"><i class="fa-solid fa-venus mr-1"></i> ស្រី (៥១.៣%)</span>
+                                    <span class="text-gray-700">៥០២,៧៧៧ នាក់</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3.5">
+                                    <div class="bg-pink-500 h-3.5 rounded-full" style="width: 51.28%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-brand-50 p-4 rounded-xl border border-brand-100 text-xs text-gray-700 leading-relaxed">
+                            <p class="font-bold text-brand-900 mb-1">កំណត់សម្គាល់អំពីទិន្នន័យប្រជាជន និងគ្រួសារ៖</p>
+                            <p>ចំនួនប្រជាជនស្ត្រីមានអត្រាច្រើនជាងបន្តិច (៥១.៣%) ធៀបនឹងប្រជាជនបុរស (៤៨.៧%) ដែលត្រូវគ្នានឹងនិន្នាការប្រជាសាស្ត្រថ្នាក់ជាតិ។ ខេត្តមានគ្រួសារសរុប ២២១,១៨៨ គ្រួសារ រស់នៅក្នុង ១,៣៧៨ ភូមិ និង ៨៨ ឃុំ/សង្កាត់។</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analysis & Overview Chart Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <!-- Left Detailed Analysis (2 cols) -->
+                    <div class="lg:col-span-2 bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-gray-100">
+                        <h2 class="text-lg font-moul text-brand-800 mb-4 pb-2 border-b border-gray-100">
+                            <i class="fa-solid fa-magnifying-glass-chart text-brand-600 mr-2"></i> ការវិភាគទិន្នន័យស៊ីជម្រៅលើលំហូរប្រជាសាស្ត្រ
+                        </h2>
+                        <div class="prose prose-slate max-w-none text-sm text-gray-600 space-y-4 leading-relaxed">
+                            <p>
+                                តាមរយៈទិន្នន័យប្រជាសាស្ត្រសរុប <strong class="text-gray-800">៩៨០,៤៦៩ នាក់</strong> និងចំនួនគ្រួសារសរុប <strong class="text-gray-800">២២១,១៨៨ គ្រួសារ</strong> ឃើញថាការអភិវឌ្ឍរោងចក្រ ឧស្សាហកម្ម និងបណ្តាញផ្លូវជាតិលេខ ៤, ៤១ និង ៥១ បានផ្លាស់ប្តូរទម្រង់សេដ្ឋកិច្ចពីកសិកម្មប្រពៃណីទៅជាសេដ្ឋកិច្ចពឹងផ្អែកលើឧស្សាហកម្ម និងសេវាកម្ម។
+                            </p>
+                            <p>
+                                <strong>ចំណុចគន្លឹះសំខាន់ៗនៃការផ្លាស់ប្តូរ៖</strong>
+                            </p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li><strong>ភាគលាភប្រជាសាស្ត្រ (Demographic Dividend)៖</strong> កម្លាំងពលកម្មវ័យក្មេង (អាយុ ១៨-៣៥ ឆ្នាំ) កើនឡើងដល់ ៥៨% នៃប្រជាជនសរុប ដែលជាកាតាលីករជម្រុញកំណើនសេដ្ឋកិច្ច។</li>
+                                <li><strong>ការផ្លាស់ប្តូរទីកន្លែងរស់នៅ៖</strong> ការផ្លាស់ទីលំនៅពីតំបន់ជនបទដាច់ស្រយាល មកកាន់តំបន់ប្រជុំជនជុំវិញក្រុងច្បារមន ក្រុងឧដុង្គម៉ែជ័យ និងស្រុកសំរោងទង ដើម្បីស្វែងរកការងារធ្វើ។</li>
+                                <li><strong>ការកើនឡើងនៃប្រាក់ចំណូល៖</strong> ចំណូលប្រចាំគ្រួសារមធ្យមបានកើនឡើងប្រមាណ ១៨% ក្នុងរយៈពេល ៣ ឆ្នាំចុងក្រោយ។</li>
+                            </ul>
+                        </div>
+
+                        <!-- Quote Card -->
+                        <div class="mt-6 bg-brand-50 border-l-4 border-brand-600 p-4 rounded-r-lg">
+                            <p class="text-xs sm:text-sm text-brand-900 italic mb-2">
+                                «ការអភិវឌ្ឍឧស្សាហកម្មនៅខេត្តកំពង់ស្ពឺ មិនត្រឹមតែបង្កើតការងាររាប់ម៉ឺនកន្លែងប៉ុណ្ណោះទេ ប៉ុន្តែថែមទាំងជួយកាត់បន្ថយការចាកចេញទៅធ្វើការនៅក្រៅប្រទេសយ៉ាងច្រើន។»
+                            </p>
+                            <span class="text-xs font-bold text-brand-700">— មន្ត្រីជំនាញផ្លាស់ប្តូរប្រជាសាស្ត្រ និងការអភិវឌ្ឍន៍ខេត្ត</span>
+                        </div>
+                    </div>
+
+                    <!-- Right Chart Box (1 col) -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-base font-bold text-gray-800 mb-2">សន្ទុះកំណើនប្រជាជន vs កំណើនសេដ្ឋកិច្ច</h3>
+                            <p class="text-xs text-gray-500 mb-4">ប្រៀបធៀបកំណើនប្រជាជន និងចំណូលមធ្យម (២០២០-២០២៥)</p>
+                            <div class="relative h-64 w-full">
+                                <canvas id="homeOverviewChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-500">
+                            <i class="fa-solid fa-circle-info mr-1 text-brand-500"></i> ទិន្នន័យបង្ហាញពីទំនាក់ទំនងវិជ្ជមានរវាងការកើនឡើងប្រជាជន និងទិន្នផលសេដ្ឋកិច្ច។
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Render Chart after HTML insertion
+            destroyChart('homeOverviewChart');
+            const ctx = document.getElementById('homeOverviewChart').getContext('2d');
+            chartInstances['homeOverviewChart'] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['២០២០', '២០២១', '២០២២', '២០២៣', '២០២៤', '២០២៥'],
+                    datasets: [
+                        {
+                            label: 'កំណើនប្រជាជន (%)',
+                            data: [1.1, 1.2, 1.25, 1.3, 1.32, 1.35],
+                            borderColor: '#0284c7',
+                            backgroundColor: 'rgba(2, 132, 199, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        },
+                        {
+                            label: 'ចំណូលគ្រួសារ ($)',
+                            data: [1450, 1520, 1680, 1850, 2020, 2200],
+                            borderColor: '#10b981',
+                            backgroundColor: 'transparent',
+                            borderDash: [5, 5],
+                            yAxisID: 'y1',
+                            tension: 0.3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Kantumruuy Pro', size: 11 } } }
+                    },
+                    scales: {
+                        y: { title: { display: true, text: 'កំណើន (%)' } },
+                        y1: { position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'ចំណូល ($)' } }
+                    }
+                }
+            });
+        }
+
+        // ==========================================
+        // TAB 2: COMMUNE/DISTRICT (ព័ត៌មានក្រុង/ស្រុក/ឃុំ)
+        // ==========================================
+        function renderCommuneTab(container) {
+            container.innerHTML = `
+                <div class="mb-6">
+                    <h1 class="text-xl sm:text-2xl font-moul text-brand-800 mb-2">ព័ត៌មាន និងទិន្នន័យតាមបណ្ដាក្រុង/ស្រុក ក្នុងខេត្តកំពង់ស្ពឺ</h1>
+                    <p class="text-sm text-gray-600">ស្វែងយល់ពីចំនួនគ្រួសារសរុប (២២១,១៨៨ គ្រួសារ) ចំនួនភូមិសរុប (១,៣៧៨ ភូមិ) និងចំនួនប្រជាជនតាមបណ្តាក្រុង/ស្រុកទាំង ៩ នៃខេត្តកំពង់ស្ពឺ (២ ក្រុង និង ៧ ស្រុក)។</p>
+                </div>
+
+                <!-- District Interactive Cards & Chart Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <!-- Left: District Household Bar Chart -->
+                    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-gray-800 text-base">ចំនួនគ្រួសារសរុបក្នុងភូមិ តាមបណ្តាក្រុង/ស្រុក</h3>
+                            <span class="text-xs bg-brand-50 text-brand-700 px-2.5 py-1 rounded font-semibold">ទិន្នន័យធ្វើបច្ចុប្បន្នភាព</span>
+                        </div>
+                        <div class="relative h-80 w-full">
+                            <canvas id="districtPopChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Right: Key Summary & Stock Image -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=600&q=80" alt="Rural Kampong Speu" class="w-full h-40 object-cover rounded-lg mb-4">
+                            <h4 class="font-bold text-gray-800 text-sm mb-2">ស្រុកដែលមានចំនួនគ្រួសារច្រើនជាងគេ</h4>
+                            <p class="text-xs text-gray-600 leading-relaxed mb-3">
+                                <strong>ស្រុកសំរោងទង</strong> (៤២,៨០២ គ្រួសារ) <strong>ស្រុកបរសេដ្ឋ</strong> (៣៩,៣៤០ គ្រួសារ) និង <strong>ស្រុកគងពិសី</strong> (៣៥,៦០៣ គ្រួសារ) ជាស្រុកដែលមានចំនួនគ្រួសារច្រើនជាងគេបំផុតក្នុងខេត្ត។
+                            </p>
+                        </div>
+                        <div class="bg-amber-50 p-3 rounded-lg border border-amber-200">
+                            <p class="text-xs text-amber-900 font-medium">
+                                <i class="fa-solid fa-lightbulb text-amber-600 mr-1"></i> សរុបគ្រួសារទូទាំងខេត្តកំពង់ស្ពឺមានចំនួន <strong>២២១,១៨៨ គ្រួសារ</strong> រស់នៅក្នុង ១,៣៧៨ ភូមិ និង ៨៨ ឃុំ/សង្កាត់។
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Data Table -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8">
+                    <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                        <h3 class="font-moul text-sm text-brand-800">តារាងស្ថិតិប្រជាជន និងគ្រួសារ តាមបណ្តាក្រុង និងស្រុក</h3>
+                        <span class="text-xs font-semibold text-brand-700 bg-brand-50 px-3 py-1 rounded-full">សរុបគ្រួសារ៖ ២២១,១៨៨ គ្រួសារ | សរុបភូមិ៖ ១,៣៧៨</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs sm:text-sm text-gray-600">
+                            <thead class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
+                                <tr>
+                                    <th class="px-6 py-3">ឈ្មោះក្រុង/ស្រុក</th>
+                                    <th class="px-6 py-3 text-center">ចំនួនឃុំ/សង្កាត់</th>
+                                    <th class="px-6 py-3 text-center">ចំនួនភូមិ (មេភូមិ)</th>
+                                    <th class="px-6 py-3 text-right">ចំនួនគ្រួសារសរុប (សៀវភៅគ្រួសារ)</th>
+                                    <th class="px-6 py-3 text-right">ប្រជាជនសរុប (នាក់)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <tr class="hover:bg-brand-50/50 transition bg-brand-50/20">
+                                    <td class="px-6 py-3.5 font-bold text-gray-800 flex items-center space-x-2">
+                                        <i class="fa-solid fa-location-dot text-brand-600 mr-1.5"></i>
+                                        <span>ស្រុកសំរោងទង</span>
+                                    </td>
+                                    <td class="px-6 py-3.5 text-center">១៥</td>
+                                    <td class="px-6 py-3.5 text-center font-medium">២៩៤</td>
+                                    <td class="px-6 py-3.5 text-right font-bold text-brand-700">៤២,៨០២</td>
+                                    <td class="px-6 py-3.5 text-right font-semibold text-gray-800">១៧៧,៧០០</td>
+                                </tr>
+                                <tr class="hover:bg-brand-50/50 transition">
+                                    <td class="px-6 py-3.5 font-bold text-gray-800">ស្រុកបរសេដ្ឋ</td>
+                                    <td class="px-6 py-3.5 text-center">១៥</td>
+                                    <td class="px-6 py-3.5 text-center font-medium">២១៨</td>
+                                    <td class="px-6 py-3.5 text-right font-bold text-brand-700">៣៩,៣៤០</td>
+                                    <td class="px-6 py-3.5 text-right font-semibold text-gray-800">១៦០,១០០</td>
+                                </tr>
+                                <tr class="hover:bg-brand-50/50 transition">
+                                    <td class="px-6 py-3.5 font-bold text-gray-800">ស្រុកគងពិសី</td>
+                                    <td class="px-6 py-3.5 text-center">១៣</td>
+                                    <td class="px-6 py-3.5 text-center font-medium">២៥០</td>
+                                    <td class="px-6 py-3.5 text-right font-bold text-brand-700">៣៥,៦០៣</td>
+                                    <td class="px-6 py-3.5 text-right font-semibold text-gray-800">១៤៦,៧០០</td>
+                                </tr>
+                                <tr class="hover:bg-brand-50/50 transition">
+                                    <td class="px-6 py-3.5 font-bold text-gray-800">ស្រុកភ្នំស្រួច</td>
+                                    <td class="px-6 py-3.5 text-center font-bold text-brand-700">១៣</td>
+                                    <td class="px-6 py-3.5 text-center font-medium">១៥២</td>
+                                    <td class="px-6 py-3.5 text-right font-bold text-brand-700">២៩,៨២៧</td>
+                                    <td class="px-6 py-3.5 text-right font-semibold text-gray-800">១២១,១០០</td>
+                                </tr>
+                                <tr class="hover:bg-brand-50/50 transition">
+                                    <td class="px-6 py-3.5 font-bold text-gray-800">ស្រុកសាមគ្គីមុនីជ័យ</td>
+                                    <td class="px-6 py-3.5 text-center">១០</td>
+                                    <td class="px-6 py-3.5 text-center font-bold text-brand-700">១៦០</td>
+                                    <td class="px-6 py-3.5 text-right font-bold text-brand-700">២១,៨៨២</td>
+                                    <td class="px-6 py-3.5 text-right font-semibold text-gray-800">១១៥,៩៥០</td>
+                                </tr>
+                                <tr class="hover:bg-brand-50/50 transition">
+                                    <td class="px-6 py-3.5 font-bold text-gray-800">ស្រុកថ្ពង</td>
+                                    <td class="px-6 py-3.5 text-center">៧</td>
+                                    <td class="px-6 py-3.5 text-center font-medium">៨៥</td>
+                                    <td class="px-6 py-3.5 text-right font-bold text-brand-700">១៦,៥៧១</td>
+                                    <td class="px-6 py-3.5 text-right font-semibold text-gray-800">៧៦,៧៥០</td>
+                                </tr>
+                                <tr class="hover:bg-brand-50/50 transition">
+                                    <td class="px-6 py-3.5 font-bold text-gray-800">ក្រុងឧដុង្គម៉ែជ័យ</td>
+                                    <td class="px-6 py-3.5 text-center">៥</td>
+                                    <td class="px-6 py-3.5 text-center font-bold text-brand-700">៩១</td>
+                                    <td class="px-6 py-3.5 text-right font-bold text-brand-700">១២,៨២៩</td>
+                                    <td class="px-6 py-3.5 text-right font-semibold text-gray-800">៥៨,០៦៩</td>
+                                </tr>
+                                <tr class="hover:bg-brand-50/50 transition">
+                                    <td class="px-6 py-3.5 font-bold text-gray-800">ក្រុងច្បារមន</td>
+                                    <td class="px-6 py-3.5 text-center">៥</td>
+                                    <td class="px-6 py-3.5 text-center font-medium">៥៦</td>
+                                    <td class="px-6 py-3.5 text-right font-bold text-brand-700">១១,៨៦៨</td>
+                                    <td class="px-6 py-3.5 text-right font-semibold text-gray-800">៦២,៨០០</td>
+                                </tr>
+                                <tr class="hover:bg-brand-50/50 transition">
+                                    <td class="px-6 py-3.5 font-bold text-gray-800">ស្រុកឱរ៉ាល់</td>
+                                    <td class="px-6 py-3.5 text-center">៥</td>
+                                    <td class="px-6 py-3.5 text-center font-medium">៧២</td>
+                                    <td class="px-6 py-3.5 text-right font-bold text-brand-700">១០,៤៦៦</td>
+                                    <td class="px-6 py-3.5 text-right font-semibold text-gray-800">៦១,៣០០</td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="bg-gray-100 font-bold text-gray-900 border-t border-gray-300">
+                                <tr>
+                                    <td class="px-6 py-3.5">សរុប រួមទូទាំងខេត្ត</td>
+                                    <td class="px-6 py-3.5 text-center text-brand-800 font-bold">៨៨</td>
+                                    <td class="px-6 py-3.5 text-center text-brand-800 font-bold">១,៣៧៨</td>
+                                    <td class="px-6 py-3.5 text-right text-brand-800 text-base font-moul">២២១,១៨៨</td>
+                                    <td class="px-6 py-3.5 text-right text-gray-900 font-bold">៩៨០,៤៦៩</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Stakeholder Quote -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-start space-x-4">
+                    <div class="w-12 h-12 rounded-full bg-brand-100 text-brand-600 flex-shrink-0 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-700 italic leading-relaxed mb-2">
+                            «ការរៀបចំទិន្នន័យប្រជាជន និងចំនួនគ្រួសារតាមឃុំ/សង្កាត់ ឱ្យបានច្បាស់លាស់ ជួយឱ្យអាជ្ញាធរមូលដ្ឋានអាចរៀបចំផែនការអភិវឌ្ឍន៍ហេដ្ឋារចនាសម្ព័ន្ធ មណ្ឌលសុខភាព និងសាលារៀន ចំគោលដៅ និងទាន់ពេលវេលា។»
+                        </p>
+                        <p class="text-xs font-bold text-gray-900">— តំណាងក្រុមប្រឹក្សាឃុំ ក្នុងខេត្តកំពង់ស្ពឺ</p>
+                    </div>
+                </div>
+            `;
+
+            // Render Chart
+            destroyChart('districtPopChart');
+            const ctx = document.getElementById('districtPopChart').getContext('2d');
+            chartInstances['districtPopChart'] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['សំរោងទង', 'បរសេដ្ឋ', 'គងពិសី', 'ភ្នំស្រួច', 'សាមគ្គីមុនីជ័យ', 'ថ្ពង', 'ឧដុង្គម៉ែជ័យ', 'ច្បារមន', 'ឱរ៉ាល់'],
+                    datasets: [{
+                        label: 'ចំនួនគ្រួសារសរុប',
+                        data: [42802, 39340, 35603, 29827, 21882, 16571, 12829, 11868, 10466],
+                        backgroundColor: '#0369a1',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) { return value.toLocaleString() + ' គ្រួសារ'; }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ==========================================
+        // TAB 3: HEALTH (សុខាភិបាល)
+        // ==========================================
+        function renderHealthTab(container) {
+            container.innerHTML = `
+                <div class="mb-6">
+                    <h1 class="text-xl sm:text-2xl font-moul text-brand-800 mb-2">ស្ថានភាពសុខាភិបាល និងសុខុមាលភាពប្រជាជន</h1>
+                    <p class="text-sm text-gray-600">ការចូលទៅកាន់សេវាសុខាភិបាល ការទទួលបានទឹកស្អាត និងអនាម័យក្នុងខេត្តកំពង់ស្ពឺ។</p>
+                </div>
+
+                <!-- Health Metrics -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 text-center">
+                        <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-hospital-user"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-gray-800">៧៨ មណ្ឌល</h4>
+                        <p class="text-xs text-gray-500 mt-1">មណ្ឌលសុខភាព និងមន្ទីរពេទ្យបង្អែក</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 text-center">
+                        <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-droplet"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-gray-800">៨២.៥%</h4>
+                        <p class="text-xs text-gray-500 mt-1">គ្រួសារទទួលបានទឹកស្អាតប្រើប្រាស់</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 text-center">
+                        <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-baby"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-gray-800">៩៤.១%</h4>
+                        <p class="text-xs text-gray-500 mt-1">ការសម្រាលកូនដោយគ្រូពេទ្យជំនាញ</p>
+                    </div>
+                </div>
+
+                <!-- Grid Analysis and Chart -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Chart Water Sanitation -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <h3 class="font-bold text-gray-800 text-base mb-4">ការប្រើប្រាស់ទឹកស្អាត និងបង្គន់អនាម័យ (%)</h3>
+                        <div class="relative h-72 w-full">
+                            <canvas id="healthWaterChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Health Narrative & Stock Image -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80" alt="Healthcare in Cambodia" class="w-full h-44 object-cover rounded-lg mb-4">
+                            <h3 class="font-moul text-sm text-brand-800 mb-2">ការកែលម្អសុខភាពមាតា និងទារក</h3>
+                            <p class="text-xs text-gray-600 leading-relaxed mb-3">
+                                តាមរយៈការវិភាគទិន្នន័យ ការស្លាប់របស់មាតានិងទារកបានថយចុះយ៉ាងខ្លាំងក្នុងរយៈពេល ៥ ឆ្នាំចុងក្រោយនេះ។ នេះជាលទ្ធផលនៃការពង្រីកបណ្តាញមណ្ឌលសុខភាព ការបំពាក់បរិក្ខារទំនើប និងការចុះអប់រំអាហារូបត្ថម្ភតាមភូមិរហូតដល់តំបន់ជួរភ្នំឱរ៉ាល់។
+                            </p>
+                        </div>
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-3 rounded-r-lg">
+                            <p class="text-xs text-blue-900 italic">
+                                «ការផ្តល់ប័ណ្ណសមធម៌សុខភិបាល (ប.ស.ស) និងប័ណ្ណក្រីក្រ បានជួយសម្រួលបន្ទុកចំណាយព្យាបាលជំងឺរបស់ប្រជាពលរដ្ឋយ៉ាងច្រើន។»
+                            </p>
+                            <span class="text-xs font-bold text-blue-700 mt-1 block">— ប្រធានមន្ទីរសុខាភិបាលខេត្ត</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Render Chart
+            destroyChart('healthWaterChart');
+            const ctx = document.getElementById('healthWaterChart').getContext('2d');
+            chartInstances['healthWaterChart'] = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['ប្រើប្រាស់ទឹកស្អាតតាមបំពង់/អណ្តូង', 'ទឹកស្រះ/ស្ទឹង (ចោះ/ចម្រោះ)', 'មានបង្គន់អនាម័យផ្ទាល់ខ្លួន', 'បង្គន់រួម/គ្មានបង្គន់'],
+                    datasets: [{
+                        data: [65, 17.5, 78, 22],
+                        backgroundColor: ['#0284c7', '#38bdf8', '#10b981', '#f59e0b']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Kantumruuy Pro', size: 11 } } }
+                    }
+                }
+            });
+        }
+
+        // ==========================================
+        // TAB 4: EDUCATION (អប់រំ)
+        // ==========================================
+        function renderEducationTab(container) {
+            container.innerHTML = `
+                <div class="mb-6">
+                    <h1 class="text-xl sm:text-2xl font-moul text-brand-800 mb-2">វិស័យអប់រំ និងការអភិវឌ្ឍធនធានមនុស្ស</h1>
+                    <p class="text-sm text-gray-600">ស្ថិតិនៃការចូលរៀន ការបញ្ចប់ការសិក្សា និងការបណ្តុះបណ្តាលបច្ចេកទេស និងវិជ្ជាជីវៈ (TVET)។</p>
+                </div>
+
+                <!-- Education Chart & Analysis -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <!-- Left Chart: School Enrollment Rate -->
+                    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <h3 class="font-bold text-gray-800 text-base mb-2">អត្រាចូលរៀនតាមកម្រិតសិក្សា (២០២០-២០២៥)</h3>
+                        <p class="text-xs text-gray-500 mb-4">ការប្រៀបធៀបរវាងបឋមសិក្សា អនុវិទ្យាល័យ និងវិទ្យាល័យ</p>
+                        <div class="relative h-72 w-full">
+                            <canvas id="educationChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Right Analysis Card -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80" alt="Education in Kampong Speu" class="w-full h-40 object-cover rounded-lg mb-4">
+                            <h4 class="font-bold text-gray-800 text-sm mb-2">ការបណ្តុះបណ្តាលជំនាញបច្ចេកទេស</h4>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                ដោយសារតម្រូវការកម្លាំងពលកម្មជំនាញក្នុងរោងចក្រ កើនឡើង វិទ្យាស្ថានពហុបច្ចេកទេសខេត្តកំពង់ស្ពឺបានបង្កើនការបណ្តុះបណ្តាលលើជំនាញមេកានិច អគ្គិសនី និងបច្ចេកវិទ្យាឌីជីថលយ៉ាងសកម្ម។
+                            </p>
+                        </div>
+                        <div class="bg-emerald-50 p-3 rounded-lg border border-emerald-200 mt-4">
+                            <p class="text-xs text-emerald-900 font-medium">
+                                <i class="fa-solid fa-graduation-cap text-emerald-600 mr-1"></i> អត្រាអក្ខរកម្មមនុស្សពេញវ័យ (អាយុ ១៥-៤៥ ឆ្នាំ) កើនឡើងដល់ ៩១.២%។
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quote Section -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-start space-x-4">
+                    <div class="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex-shrink-0 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-700 italic leading-relaxed mb-2">
+                            «ការកាត់បន្ថយអត្រាបោះបង់ការសិក្សារបស់សិស្សនៅកម្រិតអនុវិទ្យាល័យ គឺជាអាទិភាពធំបំផុត។ យើងបានបន្ថែមអាហារូបករណ៍ និងកសាងអន្តេវាសិកដ្ឋានសម្រាប់សិស្សក្រីក្រមកពីឃុំឆ្ងាយៗ។»
+                        </p>
+                        <p class="text-xs font-bold text-gray-900">— នាយកវិទ្យាល័យ ក្នុងខេត្តកំពង់ស្ពឺ</p>
+                    </div>
+                </div>
+            `;
+
+            // Render Chart
+            destroyChart('educationChart');
+            const ctx = document.getElementById('educationChart').getContext('2d');
+            chartInstances['educationChart'] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['២០២០', '២០២១', '២០២២', '២០២៣', '២០២៤', '២០២៥'],
+                    datasets: [
+                        {
+                            label: 'បឋមសិក្សា (%)',
+                            data: [92, 93, 94, 95, 96, 97],
+                            backgroundColor: '#0284c7'
+                        },
+                        {
+                            label: 'អនុវិទ្យាល័យ (%)',
+                            data: [68, 70, 72, 75, 78, 81],
+                            backgroundColor: '#38bdf8'
+                        },
+                        {
+                            label: 'វិទ្យាល័យ (%)',
+                            data: [42, 45, 48, 52, 55, 60],
+                            backgroundColor: '#818cf8'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Kantumruuy Pro', size: 11 } } }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, max: 100 }
+                    }
+                }
+            });
+        }
+
+        // ==========================================
+        // TAB 5: MIGRATION (ចំណាកស្រុក)
+        // ==========================================
+        function renderMigrationTab(container) {
+            container.innerHTML = `
+                <div class="mb-6">
+                    <h1 class="text-xl sm:text-2xl font-moul text-brand-800 mb-2">ការផ្លាស់ទីលំនៅ និងលំហូរចំណាកស្រុក</h1>
+                    <p class="text-sm text-gray-600">ការវិភាគលើចំណាកស្រុកក្នុងស្រុក ចំណាកស្រុកក្រៅប្រទេស និងឥទ្ធិពលសេដ្ឋកិច្ច។</p>
+                </div>
+
+                <!-- Migration Overview Cards -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <!-- Reasons Chart (2 cols) -->
+                    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <h3 class="font-bold text-gray-800 text-base mb-2">មូលហេតុចម្បងនៃការធ្វើចំណាកស្រុក</h3>
+                        <p class="text-xs text-gray-500 mb-4">ផ្អែកលើការអង្កេតទិន្នន័យប្រជាជន (CDB)</p>
+                        <div class="relative h-72 w-full">
+                            <canvas id="migrationChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Migration Analysis Content -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-moul text-sm text-brand-800 mb-3">របត់ថ្មី៖ ចំណាកស្រុកត្រឡប់មកវិញ</h4>
+                            <p class="text-xs text-gray-600 leading-relaxed mb-4">
+                                ជាប្រវត្តិសាស្ត្រ ពលរដ្ឋខេត្តកំពង់ស្ពឺតែងធ្វើចំណាកស្រុកទៅភ្នំពេញ ឬប្រទេសថៃ។ ប៉ុន្តែបច្ចុប្បន្ន មាននិន្នាការ «ចំណាកស្រុកត្រឡប់មកវិញ» ដោយសារ៖
+                            </p>
+                            <ul class="text-xs text-gray-600 space-y-2 list-disc pl-4">
+                                <li>ការកើនឡើងនៃរោងចក្រកាត់ដេរ និងដំឡើងរថយន្តក្នុងខេត្ត។</li>
+                                <li>ថ្លៃជីវភាពរស់នៅទាបជាងរាជធានីភ្នំពេញ។</li>
+                                <li>អាចរស់នៅជិតស្និទ្ធជាមួយគ្រួសារ និងមើលថែកូនៗ។</li>
+                            </ul>
+                        </div>
+                        <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-lg mt-4">
+                            <span class="text-xs font-bold text-indigo-900">
+                                <i class="fa-solid fa-plane-arrival text-indigo-600 mr-1"></i> ការចាកចេញទៅក្រៅប្រទេសបានថយចុះ ២៤% ប្រៀបធៀបនឹងឆ្នាំ២០១៩។
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stakeholder Quote -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-start space-x-4">
+                    <div class="w-12 h-12 rounded-full bg-amber-100 text-amber-600 flex-shrink-0 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-700 italic leading-relaxed mb-2">
+                            «មុននេះប្តីខ្ញុំទៅធ្វើការនៅថៃ ឯខ្ញុំនៅមើលកូន។ ឥឡូវយើងទាំងពីរនាក់ធ្វើការរោងចក្រនៅជិតផ្ទះក្នុងស្រុកសំរោងទង មានចំណូលថេរ ហើយបាននៅជាមួយកូនរាល់ថ្ងៃ។»
+                        </p>
+                        <p class="text-xs font-bold text-gray-900">— កម្មការិនីរោងចក្រ រស់នៅស្រុកសំរោងទង</p>
+                    </div>
+                </div>
+            `;
+
+            // Render Chart
+            destroyChart('migrationChart');
+            const ctx = document.getElementById('migrationChart').getContext('2d');
+            chartInstances['migrationChart'] = new Chart(ctx, {
+                type: 'polarArea',
+                data: {
+                    labels: ['ធ្វើការរោងចក្រ/ឧស្សាហកម្មក្នុងខេត្ត', 'ធ្វើការនៅភ្នំពេញ', 'ធ្វើការផ្នែកកសិកម្ម', 'ធ្វើការនៅក្រៅប្រទេស (ថៃ/កូរ៉េ)', 'អាជីវកម្មផ្ទាល់ខ្លួន'],
+                    datasets: [{
+                        data: [48, 22, 12, 10, 8],
+                        backgroundColor: [
+                            'rgba(2, 132, 199, 0.7)',
+                            'rgba(56, 189, 248, 0.7)',
+                            'rgba(16, 185, 129, 0.7)',
+                            'rgba(245, 158, 11, 0.7)',
+                            'rgba(139, 92, 246, 0.7)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { font: { family: 'Kantumruuy Pro', size: 11 } } }
+                    }
+                }
+            });
+        }
+
+        // ==========================================
+        // TAB 6: POVERTY DATA (ទិន្នន័យភាពក្រីក្រ)
+        // ==========================================
+        function renderPovertyTab(container) {
+            container.innerHTML = `
+                <div class="mb-6">
+                    <h1 class="text-xl sm:text-2xl font-moul text-brand-800 mb-2">ទិន្នន័យភាពក្រីក្រ និងកិច្ចគាំពារសង្គម (IDPoor)</h1>
+                    <p class="text-sm text-gray-600">ការវិភាគនិន្នាការកាត់បន្ថយភាពក្រីក្រ ក្រីក្រ១ (ក្រីក្រខ្លាំង) និង ក្រីក្រ២ (ក្រីក្រមធ្យម)។</p>
+                </div>
+
+                <!-- Poverty Trend & District Comparison -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Chart 1: Trend over years -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <h3 class="font-bold text-gray-800 text-base mb-2">អត្រាភាពក្រីក្រសរុប (២០២០-២០២៥)</h3>
+                        <p class="text-xs text-gray-500 mb-4">សន្ទុះថយចុះនៃអត្រាភាពក្រីក្រ (%)</p>
+                        <div class="relative h-72 w-full">
+                            <canvas id="povertyTrendChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 2: IDPoor 1 vs IDPoor 2 by district -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <h3 class="font-bold text-gray-800 text-base mb-2">កម្រិតក្រីក្រ ១ និង ក្រីក្រ ២ តាមក្រុង/ស្រុក</h3>
+                        <p class="text-xs text-gray-500 mb-4">ចំនួនគ្រួសារទទួលបានប័ណ្ណសមធម៌</p>
+                        <div class="relative h-72 w-full">
+                            <canvas id="povertyDistrictChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategic Summary Box -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
+                    <h3 class="font-moul text-sm text-brand-800 mb-3"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i> យន្តការកាត់បន្ថយភាពក្រីក្រ និងកិច្ចគាំពារសង្គម</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-gray-600 leading-relaxed">
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <h4 class="font-bold text-gray-800 text-sm mb-1 text-brand-700">១. កម្មវិធីឧបត្ថម្ភសាច់ប្រាក់</h4>
+                            <p>ការឧបត្ថម្ភសាច់ប្រាក់ជូនស្ត្រីមានផ្ទៃពោះ កុមារតូច និងគ្រួសារងាយរងគ្រោះ ជួយសម្រួលការលំបាកចំពោះមុខ និងធានាអាហារូបត្ថម្ភ។</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <h4 class="font-bold text-gray-800 text-sm mb-1 text-brand-700">២. ការបង្កើតការងារនៅមូលដ្ឋាន</h4>
+                            <p>ការទាក់ទាញវិនិយោគិនឱ្យមកបើករោងចក្រនៅតាមបណ្តាស្រុកកាត់បន្ថយគម្លាតចំណូលរវាងទីក្រុង និងជនបទ។</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <h4 class="font-bold text-gray-800 text-sm mb-1 text-brand-700">៣. ការបណ្តុះបណ្តាលមុខរបរ</h4>
+                            <p>ការបង្រៀនជំនាញកសិ-ឧស្សាហកម្ម ការចិញ្ចឹមសត្វ និងការកែច្នៃផលដំណាំ ដើម្បីបង្កើនប្រាក់ចំណូលបន្ថែម។</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quote Section -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-start space-x-4">
+                    <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex-shrink-0 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-700 italic leading-relaxed mb-2">
+                            «គោលដៅរបស់យើង មិនត្រឹមតែផ្តល់ជំនួយសង្គមប៉ុណ្ណោះទេ ប៉ុន្តែគឺការបង្កើតសមត្ថភាពឱ្យគ្រួសារក្រីក្រអាចឈរជើងបានដោយខ្លួនឯង តាមរយៈការងារ និងជំនាញ។»
+                        </p>
+                        <p class="text-xs font-bold text-gray-900">— មន្ត្រីមន្ទីរសង្គមកិច្ច និងអតីតយុទ្ធជន ខេត្តកំពង់ស្ពឺ</p>
+                    </div>
+                </div>
+            `;
+
+            // Render Chart 1: Trend
+            destroyChart('povertyTrendChart');
+            const ctx1 = document.getElementById('povertyTrendChart').getContext('2d');
+            chartInstances['povertyTrendChart'] = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['២០២០', '២០២១', '២០២២', '២០២៣', '២០២៤', '២០២៥'],
+                    datasets: [{
+                        label: 'អត្រាភាពក្រីក្រ (%)',
+                        data: [21.5, 20.1, 18.8, 17.2, 16.0, 15.2],
+                        borderColor: '#ef4444',
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Kantumruuy Pro', size: 11 } } }
+                    },
+                    scales: {
+                        y: { beginAtZero: false, min: 10, max: 25 }
+                    }
+                }
+            });
+
+            // Render Chart 2: IDPoor 1 vs 2
+            destroyChart('povertyDistrictChart');
+            const ctx2 = document.getElementById('povertyDistrictChart').getContext('2d');
+            chartInstances['povertyDistrictChart'] = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['ឱរ៉ាល់', 'ថ្ពង', 'ភ្នំស្រួច', 'បរសេដ្ឋ', 'សំរោងទង', 'គងពិសី', 'សាមគ្គីមុនីជ័យ', 'ឧដុង្គម៉ែជ័យ', 'ច្បារមន'],
+                    datasets: [
+                        {
+                            label: 'ក្រីក្រ ១ (គ្រួសារ)',
+                            data: [1200, 1100, 1450, 1300, 1500, 1150, 1000, 400, 420],
+                            backgroundColor: '#ef4444'
+                        },
+                        {
+                            label: 'ក្រីក្រ ២ (គ្រួសារ)',
+                            data: [1800, 1650, 2100, 2200, 2400, 1900, 1700, 600, 850],
+                            backgroundColor: '#f59e0b'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Kantumruuy Pro', size: 11 } } }
+                    },
+                    scales: {
+                        x: { stacked: true },
+                        y: { stacked: true }
+                    }
+                }
+            });
+        }
+
+        // Initialize Home Tab on First Load
+        document.addEventListener('DOMContentLoaded', () => {
+            switchTab('home');
+        });
+    </script>
+</body>
+</html>
